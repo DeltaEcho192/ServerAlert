@@ -20,8 +20,8 @@ A dockerized micro service which runs on python and peridoically makes http requ
             * If local power or internet go down the system wont be able to report.
 
 #### Combination:
-    A combination could be used. A cloud server could make sure the local IP is active and a local server can ensure the uptime of the local network.
-    This way even if the local system fails the cloud server will report the whole system as down.
+A combination could be used. A cloud server could make sure the local IP is active and a local server can ensure the uptime of the local network.
+This way even if the local system fails the cloud server will report the whole system as down.
 
 ### Requirements:
     - Python

@@ -67,3 +67,4 @@ while b < len(links):
         else:
             print("Connection and message succesfully sent")
     b = b + 1
+    up = True

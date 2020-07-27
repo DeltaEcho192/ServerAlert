@@ -21,28 +21,49 @@ consumer_secret =key[1]
 access_token = key[2]
 access_token_secret = key[3]
 
+f.close()
+
+f = open('registry.txt',"r")
+
+links = []
+for c in f:
+    links.append(c)
+
+v = 0
+while v < (len(links) - 1):
+    work = links[v]
+    work = work[:-1]
+    links[v] = work
+    v = v + 1
+
+print(links)
+
 up = True
-try:
-    response = requests.get("http://10.0.0.101:9000")
 
-    if response.status_code == 200:
-        print('Success!')
-except:
-    print("Status 404")
-    up = False
-
-
-if up == False:
+b = 0
+while b < len(links):
     try:
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
-        
-        auth.set_access_token(access_token, access_token_secret) 
-        api = tweepy.API(auth) 
-        
-        userid = api.get_user(screen_name = 'anthonydurrer')
-        print(userid.id)
-        api.send_direct_message(userid.id,"A Server has gone Down.")
+        response = requests.get(links[b])
+
+        if response.status_code == 200:
+            print('Success!')
     except:
-        print("There has been an error...")
-    else:
-        print("Connection and message succesfully sent")
+        print("Status 404")
+        up = False
+
+
+    if up == False:
+        try:
+            auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
+            
+            auth.set_access_token(access_token, access_token_secret) 
+            api = tweepy.API(auth) 
+            
+            userid = api.get_user(screen_name = 'anthonydurrer')
+            print(userid.id)
+            api.send_direct_message(userid.id,"A Server has gone Down.")
+        except:
+            print("There has been an error...")
+        else:
+            print("Connection and message succesfully sent")
+    b = b + 1

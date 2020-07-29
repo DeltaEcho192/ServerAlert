@@ -1,33 +1,34 @@
 import tweepy 
 import requests
 import threading
+import time
+import asyncio
+start_time = time.time()
 
 
-def statusCheck(link):
+def statusCheck(link,cKey,cSKey,acToken,acSToken):
     
-    up = True
     try:
         response = requests.get(link)
-
         if response.status_code == 200:
             print('Success Website = ' + link)
     except:
         print("Status 404")
         up = False
-        sendTweet(link)
-    return up
+        sendTweet(link,cKey,cSKey,acToken,acSToken)
 
-
-def sendTweet(serverNames):
+def sendTweet(serverNames,cKey,cSKey,acToken,acSToken):
     try:
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
+        print(consumer_key)
+        auth = tweepy.OAuthHandler(cKey, cSKey) 
         
-        auth.set_access_token(access_token, access_token_secret) 
+        auth.set_access_token(acToken, acSToken) 
         api = tweepy.API(auth) 
         
         userid = api.get_user(screen_name = 'anthonydurrer')
         print(userid.id)
         api.send_direct_message(userid.id,"A Server has gone Down. " + serverNames)
+        return "message Sent"
     except:
         print("There has been an error...")
     else:
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 
     f.close()
 
-    f = open('registry.txt',"r")
+    f = open('registaryTest.txt',"r")
 
     links = []
     for c in f:
@@ -71,25 +72,48 @@ if __name__ == "__main__":
     print(links)
     i = 0
     x = 0
+    print(int((len(links)/10)))
+    testVar = "Hello world"
     
-    while i < (len(links) / 4):
-        t1 = threading.Thread(target=statusCheck, args=(links[x],)) 
-        print(links[x])
-        t2 = threading.Thread(target=statusCheck, args=(links[x+1],))
-        print(links[x+1])
-        t3 = threading.Thread(target=statusCheck, args=(links[x+2],)) 
-        print(links[x+2])
-        t4 = threading.Thread(target=statusCheck, args=(links[x+3],)) 
-        print(links[x+3])
+    while i < (int(len(links) / 10)):
+        t1 = threading.Thread(target=statusCheck, args=(links[x],consumer_key,consumer_secret,access_token,access_token_secret)) 
+        t2 = threading.Thread(target=statusCheck, args=(links[x+1],consumer_key,consumer_secret,access_token,access_token_secret))
+        t3 = threading.Thread(target=statusCheck, args=(links[x+2],consumer_key,consumer_secret,access_token,access_token_secret)) 
+        t4 = threading.Thread(target=statusCheck, args=(links[x+3],consumer_key,consumer_secret,access_token,access_token_secret))
+        t5 = threading.Thread(target=statusCheck, args=(links[x+4],consumer_key,consumer_secret,access_token,access_token_secret))
+        t6 = threading.Thread(target=statusCheck, args=(links[x+5],consumer_key,consumer_secret,access_token,access_token_secret))
+        t7 = threading.Thread(target=statusCheck, args=(links[x+6],consumer_key,consumer_secret,access_token,access_token_secret))
+        t8 = threading.Thread(target=statusCheck, args=(links[x+7],consumer_key,consumer_secret,access_token,access_token_secret))
+        t9 = threading.Thread(target=statusCheck, args=(links[x+8],consumer_key,consumer_secret,access_token,access_token_secret))
+        t10 = threading.Thread(target=statusCheck, args=(links[x+9],consumer_key,consumer_secret,access_token,access_token_secret))
+        
+
         t1.start() 
         t2.start() 
         t3.start() 
-        t4.start() 
+        t4.start()
+        t5.start()
+        t6.start()
+        t7.start()
+        t8.start()
+        t9.start()
+        t10.start()
+        
         t1.join() 
         t2.join()
         t3.join()
         t4.join()
+        t5.join()
+        t6.join()
+        t7.join()
+        t8.join()
+        t9.join()
+        t10.join()
+
+
         i = i + 1
-        x = x + 4
+        x = x + 10
+        
 
     print("Done!") 
+    print("--- %s seconds ---" % (time.time() - start_time))

@@ -1,0 +1,8 @@
+version: "3"
+services:
+  serveralert:
+    build: .
+    restart: always
+    command: python multiThreadV.py
+    volumes:
+      - .:/code

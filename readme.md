@@ -28,4 +28,19 @@ This way even if the local system fails the cloud server will report the whole s
     - Twitter API Key
     - Docker
 
+### Installation
+
+* Create a Twitter developer account and get API keys and tokens
+* Create a text file called keys.txt and enter your keys and username you want to DM in this order:
+Consumer Key
+Consumer Secret Key
+Access Token
+Access Secret Token
+Username
+* Then enter atleast 10 urls in registry.txt and increase urls by 10
+* CD into directory
+* Execute `docker-compose build`
+* Execute `docker-compose up`
+The system should be online and every 5 min check the status
+
 DeltaEcho192
